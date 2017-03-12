@@ -90,11 +90,11 @@
 				DAD6A7B61E75C5340070C0DB /* RatingControl.swift */,
 				DAD6A7B81E75E3C50070C0DB /* Meal.swift */,
 				DAD6A7BA1E75E8A10070C0DB /* MealTableViewCell.swift */,
+				DAD6A7BC1E75EFEB0070C0DB /* MealTableViewController.swift */,
 				DAD6A79A1E74A6E70070C0DB /* Main.storyboard */,
 				DAD6A79D1E74A6E70070C0DB /* Assets.xcassets */,
 				DAD6A79F1E74A6E70070C0DB /* LaunchScreen.storyboard */,
 				DAD6A7A21E74A6E70070C0DB /* Info.plist */,
-				DAD6A7BC1E75EFEB0070C0DB /* MealTableViewController.swift */,
 			);
 			path = FoodTracker;
 			sourceTree = "<group>";
