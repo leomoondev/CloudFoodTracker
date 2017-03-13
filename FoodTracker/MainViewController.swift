@@ -11,10 +11,33 @@ import UIKit
 class MainViewController: UIViewController {
 
 
+    // MARK: - Properties
+    @IBOutlet weak var userNameTextField: UITextField!
+    @IBOutlet weak var passwordTextField: UITextField!
+    
+    
+    // MARK: - IBAction
+    
+    @IBAction func goToLoginButtonTapped(_ sender: UIButton) {
+        
+    }
+    @IBAction func signUpButtonTapped(_ sender: AnyObject) {
+        
+        let userNameValue = userNameTextField.text
+        
+        if isStringEmpty(userNameValue!) == true {
+            return
+        }
+        
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // Do any additional setup after loading the view.
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
     }
 
     override func didReceiveMemoryWarning() {
