@@ -10,11 +10,9 @@ import UIKit
 
 class MainViewController: UIViewController {
 
-
     // MARK: - Properties
     @IBOutlet weak var userNameTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
-    
     
     // MARK: - IBAction
     
@@ -22,38 +20,52 @@ class MainViewController: UIViewController {
         
     }
     @IBAction func signUpButtonTapped(_ sender: AnyObject) {
+        //declare parameter as a dictionary which contains string as key and value combination. considering inputs are valid
         
-        let userNameValue = userNameTextField.text
+        let parameters = ["username": userNameTextField.text!, "password": passwordTextField.text!] as Dictionary<String, String>
         
-        if isStringEmpty(userNameValue!) == true {
-            return
+        //create the url with URL
+        let url = URL(string: "http://159.203.243.24:8000/signup")! //change the url
+        
+        //create the session object
+        let session = URLSession.shared
+        
+        //now create the URLRequest object using the url object
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST" //set http method as POST
+        
+        do {
+            request.httpBody = try JSONSerialization.data(withJSONObject: parameters, options: .prettyPrinted) // pass dictionary to nsdata object and set it as request body
+            
+        } catch let error {
+            print(error.localizedDescription)
         }
         
-    }
-    override func viewDidLoad() {
-        super.viewDidLoad()
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.addValue("application/json", forHTTPHeaderField: "Accept")
         
-        // Do any additional setup after loading the view.
+        //create dataTask using the session object to send data to the server
+        let task = session.dataTask(with: request as URLRequest, completionHandler: { data, response, error in
+            
+            guard error == nil else {
+                return
+            }
+            
+            guard let data = data else {
+                return
+            }
+            
+            do {
+                //create json object from data
+                if let json = try JSONSerialization.jsonObject(with: data, options: .mutableContainers) as? [String: Any] {
+                    print(json)
+                    // handle json...
+                }
+                
+            } catch let error {
+                print(error.localizedDescription)
+            }
+        })
+        task.resume()
     }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }
