@@ -1,3 +1,1 @@
-# Fod
-# FoodTracker
 # CloudFoodTracker
