@@ -19,6 +19,8 @@
 		DAD6A7BE1E75EFEB0070C0DB /* MealTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD6A7BC1E75EFEB0070C0DB /* MealTableViewController.swift */; };
 		DAFF8C061E77097800890BEC /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAFF8C051E77097800890BEC /* MainViewController.swift */; };
 		DAFF8C081E770D5A00890BEC /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAFF8C071E770D5A00890BEC /* LoginViewController.swift */; };
+		DAFF8C0B1E7752A300890BEC /* KeychainOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAFF8C091E7752A300890BEC /* KeychainOptions.swift */; };
+		DAFF8C0C1E7752A300890BEC /* KeychainWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAFF8C0A1E7752A300890BEC /* KeychainWrapper.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -48,6 +50,8 @@
 		DAD6A7BC1E75EFEB0070C0DB /* MealTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MealTableViewController.swift; sourceTree = "<group>"; };
 		DAFF8C051E77097800890BEC /* MainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		DAFF8C071E770D5A00890BEC /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		DAFF8C091E7752A300890BEC /* KeychainOptions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeychainOptions.swift; sourceTree = "<group>"; };
+		DAFF8C0A1E7752A300890BEC /* KeychainWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeychainWrapper.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -89,6 +93,8 @@
 		DAD6A7951E74A6E70070C0DB /* FoodTracker */ = {
 			isa = PBXGroup;
 			children = (
+				DAFF8C091E7752A300890BEC /* KeychainOptions.swift */,
+				DAFF8C0A1E7752A300890BEC /* KeychainWrapper.swift */,
 				DAD6A7961E74A6E70070C0DB /* AppDelegate.swift */,
 				DAFF8C051E77097800890BEC /* MainViewController.swift */,
 				DAD6A7B81E75E3C50070C0DB /* Meal.swift */,
@@ -226,7 +232,9 @@
 				DAFF8C081E770D5A00890BEC /* LoginViewController.swift in Sources */,
 				DAD6A7971E74A6E70070C0DB /* AppDelegate.swift in Sources */,
 				DAD6A7BE1E75EFEB0070C0DB /* MealTableViewController.swift in Sources */,
+				DAFF8C0B1E7752A300890BEC /* KeychainOptions.swift in Sources */,
 				DAD6A7BB1E75E8A10070C0DB /* MealTableViewCell.swift in Sources */,
+				DAFF8C0C1E7752A300890BEC /* KeychainWrapper.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

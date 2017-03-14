@@ -7,9 +7,28 @@
 //
 
 import UIKit
+import Security
+
+let kSecClassGenericPasswordValue = String(format: kSecClassGenericPassword as String)
+let kSecClassValue = String(format: kSecClass as String)
+let kSecAttrServiceValue = String(format: kSecAttrService as String)
+let kSecValueDataValue = String(format: kSecValueData as String)
+let kSecMatchLimitValue = String(format: kSecMatchLimit as String)
+let kSecReturnDataValue = String(format: kSecReturnData as String)
+let kSecMatchLimitOneValue = String(format: kSecMatchLimitOne as String)
+let kSecAttrAccountValue = String(format: kSecAttrAccount as String)
 
 class MainViewController: UIViewController {
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
 
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+    }
     // MARK: - Properties
     @IBOutlet weak var userNameTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
@@ -21,6 +40,7 @@ class MainViewController: UIViewController {
     }
     @IBAction func signUpButtonTapped(_ sender: AnyObject) {
         //declare parameter as a dictionary which contains string as key and value combination. considering inputs are valid
+        
         
         let parameters = ["username": userNameTextField.text!, "password": passwordTextField.text!] as Dictionary<String, String>
         
@@ -58,14 +78,109 @@ class MainViewController: UIViewController {
             do {
                 //create json object from data
                 if let json = try JSONSerialization.jsonObject(with: data, options: .mutableContainers) as? [String: Any] {
-                    print(json)
-                    // handle json...
+                    
+
+                    
+//
+//                    
+//                    let keys = Array(json.keys)
+//                    print(keys)
+                    
+                    let values = Array(json.values)
+                    
+                    print(values)
+                    
+                    let currentConditions = json["user"] as! [String:Any]
+                    
+                    for (key, value) in currentConditions {
+                        self.setPasscode(passcode: "\(key) - \(value) ")
+                        print(self.getPasscode())
+                        
+                        print("\(key) - \(value) ")
+                    }
+                    
                 }
                 
             } catch let error {
                 print(error.localizedDescription)
             }
+            OperationQueue.main.addOperation{
+                let alert = UIAlertController(title: error as! String?, message: error?.localizedDescription, preferredStyle: UIAlertControllerStyle.alert)
+                alert.addAction(UIAlertAction(title: "Click", style: UIAlertActionStyle.default, handler: nil))
+                self.present(alert, animated: true, completion: nil)
+            }
         })
+        
+        
+        
         task.resume()
+        
+    }
+    
+
+    
+    
+    func setPasscode(passcode: String) {
+        let keychainAccess = KeychainAccess();
+        keychainAccess.setPasscode(identifier: "username", passcode:passcode);
+
+
+        
+        
+    }
+    
+    
+    func getPasscode() -> NSString {
+        let keychainAccess = KeychainAccess();
+        return keychainAccess.getPasscode(identifier: "username")! as NSString;
+    }
+    
+    
+    func deletePasscode() {
+        let keychainAccess = KeychainAccess();
+        keychainAccess.setPasscode(identifier: "username", passcode:"");
+    }
+    
+    struct KeychainAccess {
+        
+        func setPasscode(identifier: String, passcode: String) {
+            if let dataFromString = passcode.data(using: String.Encoding.utf8) {
+                let keychainQuery = [
+                    kSecClassValue: kSecClassGenericPasswordValue,
+                    kSecAttrServiceValue: identifier,
+                    kSecValueDataValue: dataFromString
+                    ] as CFDictionary
+                SecItemDelete(keychainQuery)
+                print(SecItemAdd(keychainQuery, nil))
+            }
+        }
+        
+        func getPasscode(identifier: String) -> String? {
+            let keychainQuery = [
+                kSecClassValue: kSecClassGenericPasswordValue,
+                kSecAttrServiceValue: identifier,
+                kSecReturnDataValue: kCFBooleanTrue,
+                kSecMatchLimitValue: kSecMatchLimitOneValue
+                ] as  CFDictionary
+            var dataTypeRef: AnyObject?
+            let status: OSStatus = SecItemCopyMatching(keychainQuery, &dataTypeRef)
+            var passcode: String?
+            if (status == errSecSuccess) {
+                if let retrievedData = dataTypeRef as? Data,
+                    let result = String(data: retrievedData, encoding: String.Encoding.utf8) {
+                    passcode = result as String
+                    
+                    print(result)
+                }
+            }
+            else {
+                print("Nothing was retrieved from the keychain. Status code \(status)")
+            }
+            return passcode
+        }
+        
+
     }
 }
+
+
