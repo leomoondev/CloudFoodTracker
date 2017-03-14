@@ -138,8 +138,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Go to Login Screen"/>
                                 <connections>
-                                    <action selector="goToLoginButtonTapped:" destination="gVK-ix-qCa" eventType="touchUpInside" id="hGT-u7-ymx"/>
-                                    <segue destination="v0b-Hk-0R7" kind="show" identifier="goToLogin" id="BsZ-mq-NJY"/>
+                                    <segue destination="bgO-eO-jsB" kind="show" identifier="goToLogin" id="7of-XE-Ly7"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -316,24 +315,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pBQ-MP-Wa4" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-1281" y="629"/>
-        </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="CGJ-Na-YaN">
-            <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="v0b-Hk-0R7" sceneMemberID="viewController">
-                    <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Zka-Vy-cQ8">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="bgO-eO-jsB" kind="relationship" relationship="rootViewController" id="8WJ-Y9-ut0"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="IPh-Fg-bnj" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-423.19999999999999" y="1372.263868065967"/>
         </scene>
     </scenes>
     <resources>

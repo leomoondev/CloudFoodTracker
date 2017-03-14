@@ -22,8 +22,6 @@ class MainViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -34,13 +32,8 @@ class MainViewController: UIViewController {
     @IBOutlet weak var passwordTextField: UITextField!
     
     // MARK: - IBAction
-    
-    @IBAction func goToLoginButtonTapped(_ sender: UIButton) {
-        
-    }
     @IBAction func signUpButtonTapped(_ sender: AnyObject) {
         //declare parameter as a dictionary which contains string as key and value combination. considering inputs are valid
-        
         
         let parameters = ["username": userNameTextField.text!, "password": passwordTextField.text!] as Dictionary<String, String>
         
@@ -60,7 +53,6 @@ class MainViewController: UIViewController {
         } catch let error {
             print(error.localizedDescription)
         }
-        
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         request.addValue("application/json", forHTTPHeaderField: "Accept")
         
@@ -78,57 +70,52 @@ class MainViewController: UIViewController {
             do {
                 //create json object from data
                 if let json = try JSONSerialization.jsonObject(with: data, options: .mutableContainers) as? [String: Any] {
-                    
-
-                    
-//
-//                    
 //                    let keys = Array(json.keys)
 //                    print(keys)
                     
                     let values = Array(json.values)
                     
                     print(values)
-                    
-                    let currentConditions = json["user"] as! [String:Any]
-                    
-                    for (key, value) in currentConditions {
-                        self.setPasscode(passcode: "\(key) - \(value) ")
-                        print(self.getPasscode())
+          
+                    if (json["error"] != nil)  {
                         
-                        print("\(key) - \(value) ")
+                        let showTitle = values[0] as! String
+                        
+                        OperationQueue.main.addOperation{
+                            let alert = UIAlertController(title: showTitle, message: "Please try it again with different username", preferredStyle: UIAlertControllerStyle.alert)
+                            alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
+                            self.present(alert, animated: true, completion: nil)
+                        }
                     }
-                    
+                    else {
+                        let currentConditions = json["user"] as! [String:Any]
+                        
+                        for (key, value) in currentConditions {
+                            self.setPasscode(passcode: "\(key) - \(value) ")
+                            print(self.getPasscode())
+                            
+                            print("\(key) - \(value) ")
+                        }
+                        
+                        OperationQueue.main.addOperation{
+                            let alert = UIAlertController(title: "Registration Success", message: "You have successfully registered", preferredStyle: UIAlertControllerStyle.alert)
+                            alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
+                            self.present(alert, animated: true, completion: nil)
+                        }
+                    }
                 }
-                
             } catch let error {
+                
                 print(error.localizedDescription)
             }
-            OperationQueue.main.addOperation{
-                let alert = UIAlertController(title: error as! String?, message: error?.localizedDescription, preferredStyle: UIAlertControllerStyle.alert)
-                alert.addAction(UIAlertAction(title: "Click", style: UIAlertActionStyle.default, handler: nil))
-                self.present(alert, animated: true, completion: nil)
-            }
         })
-        
-        
-        
         task.resume()
-        
     }
-    
-
-    
     
     func setPasscode(passcode: String) {
         let keychainAccess = KeychainAccess();
         keychainAccess.setPasscode(identifier: "username", passcode:passcode);
-
-
-        
-        
     }
-    
     
     func getPasscode() -> NSString {
         let keychainAccess = KeychainAccess();
@@ -182,5 +169,3 @@ class MainViewController: UIViewController {
 
     }
 }
-
-
