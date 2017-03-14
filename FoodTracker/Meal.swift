@@ -17,6 +17,8 @@ class Meal: NSObject, NSCoding {
     var name: String
     var photo: UIImage?
     var rating: Int
+    var calories: Int
+    var mealDescription: String
     
     //MARK: Archiving Paths
     static let DocumentsDirectory = FileManager().urls(for: .documentDirectory, in: .userDomainMask).first!
@@ -28,10 +30,12 @@ class Meal: NSObject, NSCoding {
         static let name = "name"
         static let photo = "photo"
         static let rating = "rating"
+        static let calories =  "calories"
+        static let mealDescription = "mealDescription"
     }
     
     // MARK: Initialization
-    init?(name: String, photo: UIImage?, rating: Int) {
+    init?(name: String, photo: UIImage?, rating: Int, calories: Int, mealDescription: String) {
         
 //        // Initialization should fail if there is no name or if the rating is negative.
 //        if name.isEmpty || rating < 0 {
@@ -57,6 +61,8 @@ class Meal: NSObject, NSCoding {
         self.name = name
         self.photo = photo
         self.rating = rating
+        self.calories = calories
+        self.mealDescription = mealDescription
         
     }
     //MARK: NSCoding
@@ -65,6 +71,8 @@ class Meal: NSObject, NSCoding {
         aCoder.encode(name, forKey: PropertyKey.name)
         aCoder.encode(photo, forKey: PropertyKey.photo)
         aCoder.encode(rating, forKey: PropertyKey.rating)
+        aCoder.encode(calories, forKey: PropertyKey.calories)
+        aCoder.encode(mealDescription, forKey: PropertyKey.mealDescription)
     }
     
     required convenience init?(coder aDecoder: NSCoder) {
@@ -80,8 +88,12 @@ class Meal: NSObject, NSCoding {
         
         let rating = aDecoder.decodeInteger(forKey: PropertyKey.rating)
         
+        let calories = aDecoder.decodeInteger(forKey: PropertyKey.calories)
+        
+        let mealDescription = aDecoder.decodeObject(forKey: PropertyKey.mealDescription)
+        
         // Must call designated initializer.
-        self.init(name: name, photo: photo, rating: rating)
+        self.init(name: name, photo: photo, rating: rating, calories: calories, mealDescription: mealDescription as! String)
         
     }
 }
